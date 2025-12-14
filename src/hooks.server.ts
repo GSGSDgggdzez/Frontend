@@ -1,6 +1,6 @@
 // src/hooks.server.ts
 import PocketBase, { type AuthRecord } from 'pocketbase';
-import { serializeNonPOJOs } from '$lib';
+import { serializeNonPOJOs } from '.';
 import { PUBLIC_pocketbase_URL } from '$env/static/public';
 
 /** @type {import('@sveltejs/kit').Handle} */
