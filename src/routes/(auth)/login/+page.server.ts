@@ -59,17 +59,17 @@ export const actions = {
 			const { email, password } = result.data;
 
 			try {
-			  await locals.pb.collection('users').authWithPassword(email, password);
+				await locals.pb.collection('users').authWithPassword(email, password);
 			} catch (err: unknown) {
-			  console.error('Login error:', err);
-			  // Normalize to prevent user enumeration
-			  return fail(400, { error: 'Invalid email or password' });
+				console.error('Login error:', err);
+				// Normalize to prevent user enumeration
+				return fail(400, { error: 'Invalid email or password' });
 			}
 
 			if (!locals.pb.authStore.record?.verified) {
-			  // Clear and normalize response to avoid leaking existence
-			  locals.pb.authStore.clear();
-			  return fail(400, { error: 'Invalid email or password' });
+				// Clear and normalize response to avoid leaking existence
+				locals.pb.authStore.clear();
+				return fail(400, { error: 'Invalid email or password' });
 			}
 
 			throw redirect(303, '/');

@@ -150,12 +150,9 @@ export const actions = {
 						.refine((file) => file.size <= 10 * 1024 * 1024, {
 							message: 'Content file must be less than 10MB'
 						})
-						.refine(
-							(file) => ['image/jpeg', 'image/png', 'application/pdf'].includes(file.type),
-							{
-								message: 'Only JPG, PNG, and PDF files are allowed'
-							}
-						)
+						.refine((file) => ['image/jpeg', 'image/png', 'application/pdf'].includes(file.type), {
+							message: 'Only JPG, PNG, and PDF files are allowed'
+						})
 				)
 			});
 
@@ -167,14 +164,14 @@ export const actions = {
 			}
 
 			const providerData = {
-			  user_id: user.id,
-			  bio: result.data.bio,
-			  current_geolocation: JSON.parse(result.data.current_geolocation),
-			  languages: JSON.parse(result.data.languages),
-			  availability: JSON.parse(result.data.availability),
-			  content: result.data.content,
-			  rating: 0,
-			  total_review: 0
+				user_id: user.id,
+				bio: result.data.bio,
+				current_geolocation: JSON.parse(result.data.current_geolocation),
+				languages: JSON.parse(result.data.languages),
+				availability: JSON.parse(result.data.availability),
+				content: result.data.content,
+				rating: 0,
+				total_review: 0
 			};
 
 			await locals.pb.collection('provider_profiles').create(providerData);
