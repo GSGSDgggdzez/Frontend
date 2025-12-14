@@ -117,9 +117,7 @@ export const actions = {
 					z.string().min(8, { message: 'Password must be at least 8 characters long' })
 				),
 				phonenumber: zfd.text(
-					z
-						.string()
-						.regex(/^\d{9}$/, { message: 'Phone number must be 9 digits long' })
+					z.string().regex(/^\d{9}$/, { message: 'Phone number must be 9 digits long' })
 				),
 				countryCode: zfd.text(
 					z.string().regex(/^\+\d{1,4}$/, { message: 'Country code must be in format +XXX' })
@@ -249,10 +247,7 @@ export const actions = {
 					z.string().min(8, { message: 'Password must be at least 8 characters long' })
 				),
 				phonenumber: zfd.text(
-					z
-						.string()
-						.regex(/^\d{9}$/, { message: 'Phone number must be 9 digits long' })
-
+					z.string().regex(/^\d{9}$/, { message: 'Phone number must be 9 digits long' })
 				),
 				countryCode: zfd.text(
 					z.string().regex(/^\+\d{1,4}$/, { message: 'Country code must be in format +XXX' })

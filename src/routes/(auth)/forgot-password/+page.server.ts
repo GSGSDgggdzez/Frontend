@@ -49,38 +49,37 @@ export async function load() {
 }
 
 export const actions = {
-    forgotPassword: async ({ request, locals }) => {
-        try {
-            const formData = await request.formData();
+	forgotPassword: async ({ request, locals }) => {
+		try {
+			const formData = await request.formData();
 
-            const forgotPasswordSchema = zfd.formData({
-                email: zfd.text(z.email({ message: 'Please enter a valid email address' }))
-            });
+			const forgotPasswordSchema = zfd.formData({
+				email: zfd.text(z.email({ message: 'Please enter a valid email address' }))
+			});
 
-            const result = forgotPasswordSchema.safeParse(formData);
-            if (!result.success) {
-                return fail(400, {
-                    errors: z.treeifyError(result.error)
-                });
-            }
+			const result = forgotPasswordSchema.safeParse(formData);
+			if (!result.success) {
+				return fail(400, {
+					errors: z.treeifyError(result.error)
+				});
+			}
 
-            const { email } = result.data;
+			const { email } = result.data;
 
-            try {
-              await locals.pb.collection('users').requestPasswordReset(email);
-            } catch (err: unknown) {
-              console.error('Forgot Password error:', err);
-              // Intentionally swallow specific errors to prevent email enumeration
-              // We still proceed to return the same success message below.
-            }
+			try {
+				await locals.pb.collection('users').requestPasswordReset(email);
+			} catch (err: unknown) {
+				console.error('Forgot Password error:', err);
+				// Intentionally swallow specific errors to prevent email enumeration
+				// We still proceed to return the same success message below.
+			}
 
-            return {
-              success: true,
-              message: 'If an account with that email exists, a password reset link has been sent.'
-            };
-
-        }catch (err) {
-            if (err instanceof Response && err.status === 303) {
+			return {
+				success: true,
+				message: 'If an account with that email exists, a password reset link has been sent.'
+			};
+		} catch (err) {
+			if (err instanceof Response && err.status === 303) {
 				throw err;
 			}
 
@@ -88,8 +87,6 @@ export const actions = {
 			return fail(500, {
 				error: 'An unexpected error occurred. Please try again.'
 			});
-        }
-    }
-}
-
-
+		}
+	}
+};
